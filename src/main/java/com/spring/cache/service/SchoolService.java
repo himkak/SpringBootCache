@@ -25,7 +25,7 @@ public class SchoolService {
 	}
 	
 
-	public void deleteStudents(String schoolName) {
-		studentRepo.deleteStudents(schoolName);
+	public void addStudent(List<Student> student,String schoolName) {
+		studentRepo.addStudent(student,schoolName);
 	}
 }

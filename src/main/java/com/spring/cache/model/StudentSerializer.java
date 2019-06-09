@@ -10,10 +10,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class StudentSerializer implements RedisSerializer<List<Student>> {
+public class StudentSerializer implements RedisSerializer<Student> {
 
 	@Override
-	public byte[] serialize(List<Student> t) throws SerializationException {
+	public byte[] serialize(Student t) throws SerializationException {
 		ObjectMapper objMapper = new ObjectMapper();
 		try {
 			return objMapper.writeValueAsString(t).getBytes();
@@ -24,7 +24,7 @@ public class StudentSerializer implements RedisSerializer<List<Student>> {
 	}
 
 	@Override
-	public List<Student> deserialize(byte[] bytes) throws SerializationException {
+	public Student deserialize(byte[] bytes) throws SerializationException {
 		ObjectMapper objMapper = new ObjectMapper();
 		String val = new String(bytes);
 		try {

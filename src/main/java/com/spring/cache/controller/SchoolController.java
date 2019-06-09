@@ -23,10 +23,9 @@ public class SchoolController {
 	@Autowired
 	private SchoolService studentService;
 	
-	@CachePut(value = "students", key = "#schoolName")
 	@PutMapping("/{schoolName}")
-	public void insertStudents(@RequestBody List<Student> students,@PathVariable String schoolName) {
-		studentService.saveStudents(students, schoolName);
+	public void insertStudents(@RequestBody List<Student> student,@PathVariable String schoolName) {
+		studentService.addStudent(student, schoolName);
 	}
 	
 	@GetMapping(value="/{schoolName}", params = { "page", "size" })
@@ -39,7 +38,7 @@ public class SchoolController {
 	@CacheEvict(value = "students", allEntries=true)
 	@DeleteMapping("/{schoolName}")
 	public void deleteCache(@PathVariable String schoolName) {
-		studentService.deleteStudents(schoolName);
+		//studentService.deleteStudents(schoolName);
 	}
 
 }
