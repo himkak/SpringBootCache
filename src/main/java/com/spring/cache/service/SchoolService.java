@@ -14,18 +14,16 @@ public class SchoolService {
 	@Autowired
 	private StudentRepo studentRepo;
 
-	public void saveStudents(List<Student> student, String schoolName) {
-		studentRepo.saveSchoolStudents(student, schoolName);
+	public void deleteSchool(String schoolName) {
+		studentRepo.daleteSchool(schoolName);
 	}
 
-	
 	public List<Student> getStudents(String schoolName, int startIndex, int endIndex) {
 		System.out.println("Called getStudents service");
-		return studentRepo.getStudentsOfSchool(schoolName).subList(startIndex, endIndex);
+		return studentRepo.getStudents(schoolName).subList(startIndex, endIndex);
 	}
-	
 
-	public void addStudent(List<Student> student,String schoolName) {
-		studentRepo.addStudent(student,schoolName);
+	public void setStudent(List<Student> student, String schoolName) {
+		studentRepo.setStudents(student, schoolName);
 	}
 }

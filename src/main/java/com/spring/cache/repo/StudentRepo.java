@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
@@ -11,16 +12,17 @@ import org.springframework.stereotype.Repository;
 import com.spring.cache.model.Student;
 
 @Repository
-@CacheConfig( cacheManager = "redisCacheManager")
+@CacheConfig(cacheNames = "students", cacheManager = "redisCacheManager")
 public class StudentRepo {
 
-	public void saveSchoolStudents(List<Student> student, String schoolName) {
-		// TODO Auto-generated method stub
+	@CacheEvict(key = "#schoolName")
+	public void daleteSchool(String schoolName) {
+		System.out.println("deleting school information." + schoolName);
 
 	}
 
-	@Cacheable(value="students", key = "#schoolName")
-	public List<Student> getStudentsOfSchool(String schoolName) {
+	@Cacheable(key = "#schoolName", sync=true)
+	public List<Student> getStudents(String schoolName) {
 		System.out.println("called studentRepo getStudentsOfSchool");
 		List<Student> students = new ArrayList<>();
 		students.add(new Student(1, "him1", 31));
@@ -37,8 +39,8 @@ public class StudentRepo {
 		return students;
 	}
 
-	@CachePut(value="students",key = "#schoolName", unless="#result == null")
-	public List<Student> addStudent(List<Student> student, String schoolName) {
+	@CachePut(key = "#schoolName", unless = "#result == null")
+	public List<Student> setStudents(List<Student> student, String schoolName) {
 		// TODO Auto-generated method stub
 		System.out.println("student:" + student + ",schoolName:" + schoolName);
 		return student;
